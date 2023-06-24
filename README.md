@@ -1,7 +1,7 @@
 <p align="center">
     <img width="400" src="https://gitee.com/d__isaster/cornucopia/raw/master/img/fast-mq.png">
 </p>
-[Chinese]()
+[Chinese](https://github.com/DisasterCamp/fast-mq/blob/master/README-CH.md)
 
 ## 🔥Features
 
