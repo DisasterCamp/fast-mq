@@ -2,7 +2,7 @@
     <img width="400" src="https://gitee.com/d__isaster/cornucopia/raw/master/img/fast-mq.png">
 </p>
 
-[Chinese](https://github.com/DisasterCamp/lock-layer/blob/master/README-CH.md)
+[Chinese](https://github.com/DisasterCamp/fast-mq/blob/master/README-CH.md)
 
 ## 🔥Features
 
