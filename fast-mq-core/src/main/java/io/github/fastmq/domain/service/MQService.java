@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public interface MQService {
@@ -21,9 +22,9 @@ public interface MQService {
                         : fastMQMessageListener.consumeName()))
                 .collect(Collectors.toList());
         //随机一个消费者进行消费：后期可以采用多策略去完成此工作
-        Random rand = new Random();
-        int i = rand.nextInt(entries.size());
-        return entries.get(i).getKey();
+        ThreadLocalRandom current = ThreadLocalRandom.current();
+        int i1 = current.nextInt(entries.size());
+        return entries.get(i1).getKey();
     }
 
 }

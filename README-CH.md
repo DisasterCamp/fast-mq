@@ -1,45 +1,43 @@
 <p align="center">
     <img width="400" src="https://gitee.com/d__isaster/cornucopia/raw/master/img/fast-mq.png">
 </p>
-[Chinese]()
 
-## 🔥Features
-
-- 🚀 Out of the box
-- 🍄 Delay queue
-- 🔆 ACK mechanism
-- 📦 Asynchronous communication
-- 🎨 Message fault repair
-- 🌕 Dead letter queue processing
-- 🌪️ Messages, consumer groups, consumer monitoring management
-- 💫 Flexible interface idempotent control
-- 🪐 Supports redis single-node, master-slave, and cluster
-- ..........（To be continued）
-## 🖥 Environment Required
+## 🔥特性（Features）
+- 🚀 开箱即用
+- 🍄 延时队列
+- 🔆 ACK机制
+- 📦 异步通信
+- 🎨 消息故障修复
+- 🌕 死信队列处理
+- 🌪️ 消息、消费组、消费者监控管理
+- 💫 灵活接口幂等控制
+- 🪐 支持redis单机、主从、集群
+- ..........（待续）
+## 🖥 环境要求 （Environment Required）
 - redis v6.0.0+
 - springboot v2.6.5
 - jdk 1.8+
 - ......
 
-## 🌎 Architecture
+## 🌎 整体架构 （Architecture）
 
-....（To be continued）
+....（待续）
 
-## ☀️ Quick Start
+## ☀️ 快速开始（Quick Start）
 
-### Dependency
+### 依赖 (Dependency)
 
 ```java 
-# This version does not yet have a monitoring page
+##此版本还未有监控页面
 <dependency>
   <groupId>io.github.disaster1-tesk</groupId>
   <artifactId>fast-mq-core</artifactId>
   <version>1.3.0</version>
 </dependency>
 ```
-### Queue
-#### Producer
-Inject FastMQTemplate to use it
+### 队列 (Queue)
+#### 生产者 （Producer）
+注入FastMQTemplate即可使用
 ```java 
 public class FastMQTemplateTest extends BaseTest {
     @Autowired
@@ -61,11 +59,11 @@ public class FastMQTemplateTest extends BaseTest {
 }
 
 ```
-#### Consumer
+#### 消费者（Consumer）
 ```java 
 
 /**
- * Without annotations, the framework's default topic and consumername are used
+ * 不使用注解，则使用框架默认的topic和consumername
  * 
  */
 @Service
@@ -78,7 +76,7 @@ public class FastMQConsumerTest implements FastMQListener {
 }
 
 /**
- * Use annotations to specify topic and consumername, and also support interface idempotent processing
+ * 使用注解可指定topic和consumername，同时还支持接口幂等处理
  * 
  */
 @Service
@@ -91,9 +89,9 @@ public class FastMQConsumerAnnotationTest implements FastMQListener{
     }
 }
 ```
-### Delay Queue
-#### Producer
-Inject FastMQTemplate to use it
+### 延时队列 （Delay Queue）
+#### 生产者 （Producer）
+注入FastMQTemplate即可使用
 ```java 
 public class FastMQDelayTemplateTest extends BaseTest {
     @Autowired
@@ -109,10 +107,10 @@ public class FastMQDelayTemplateTest extends BaseTest {
 }
 
 ```
-#### Consumer
+#### 消费者（Consumer）
 ```java 
 /**
- * Use the framework default queue name and thread pool without annotations
+ * 不使用注解则使用框架默认队列名和线程池
  */
 @Service
 @Slf4j
@@ -124,7 +122,7 @@ public class FastMQDelayConsumerTest implements FastMQDelayListener {
 }
 
 /**
- * Use annotations to customize the queue name and thread pool
+ * 使用注解可自定义队列名称与线程池
  */
 @FastMQDelayMessageListener(queueName = "test",executorName = "test_executor")
 @Service
@@ -136,19 +134,19 @@ public class FastMQDelayConsumerAnnotationTest implements FastMQDelayListener {
     }
 }
 ```
-##  💐 Configuration
-### 🦫Redission Configuration
-#### 1.fast-mq Built-in configuration
-fast-mq supports the Redission single-node, master-slave, and cluster configuration using YAML
+##  💐 配置 （Configuration）
+### 🦫Redission配置项
+#### 1.fast-mq内置配置
+fast-mq支持通过YAML配置Redission单机、主从、集群
 ```
-## Stand-alone version
+## 单机版本
 redisson:
   server:
     host: 127.0.0.1
     port: 6379
     database: 0
     deployment: stand_alone
-## Master-slave version
+## 主从版本
 redisson:
   server:
     host: 127.0.0.1
@@ -157,7 +155,8 @@ redisson:
     nodes: 127.0.0.1:xxx,127.0.0.1:xxx,127.0.0.1:xxx
     master: mymaster
     deployment: master_slave
-## cluster
+## 集群
+
   server:
     host: 127.0.0.1
     port: 6379
@@ -165,8 +164,8 @@ redisson:
     nodes: 127.0.0.1:xxx,127.0.0.1:xxx,127.0.0.1:xxx
     deployment: cluster
 ```
-#### 2.Customize
-If you don't want to use the Redission-YAML configuration provided by fast-mq, you just need to instantiate a RedissonClient object in your springboot project and have it managed by spring
+#### 2.用户自定义
+如果不想使用fast-mq提供的Redission-YAML配置，则只需要在springboot项目中实例化一个RedissonClient对象并被spring管理即可
 ```java
 @Configuration
 public class RedissionConfig {
@@ -182,41 +181,41 @@ public class RedissionConfig {
     }
 }
 ```
-### 🦦FastMQ Configuration
+### 🦦FastMQ配置项
 
 ```
 fastmq:
   config:
-    # Whether to enable fastmq
+    #是否开启fastmq
     enable: false
-    # The amount of data pulled each time
+    # 每次拉取数据的量
     fetchMessageSize: 5
-    # Pull the size of the PendingList each time
+    #每次拉取PendingList的大小
     pullPendingListSize: 1000
-    # Dead letter threshold (seconds)
+    #死信门槛（秒）
     deadLetterThreshold: 32
-    # Whether to subscribe to messages from the beginning
+    #是否从头开始订阅消息
     isStartFromHead: true
-    # The stream is persisted beyond this length (non-strict mode -- MAXLEN~).
+    #超过了该长度stream前面部分会被持久化（非严格模式——MAXLEN~）
     trimThreshold: 10000
-    # Asynchronous or not
+    #是否是异步
     isAsync: false
     executor:
-      # Pull the period of the default topic information
+      #拉取默认主题信息的周期
       pullDefaultTopicMessagesPeriod: 10
-      # Check the PendingList period
+      #检查PendingList周期
       pullTopicMessagesPeriod: 1
       time-unit: seconds
-      # Delay time for the first execution
+      #第一次延迟执行的时间
       initial-delay: 1
-      # Number of core threads in the thread pool. Set this parameter during synchronization to improve efficiency. If the asynchronous consumption mode is used, use the default value
+      #线程池的核心线程数，同步时调此参数能有效提高效率，如果采用的是异步消费的方式，使用默认配置即可
       executor-core-size: 20
     claim:
-      # Claim threshold (milliseconds)
+      #认领门槛(单位毫秒)
       claimThreshold: 20
       time-unit: milliseconds
     idle:
-      # Check the threshold for consumer inactivity (seconds)
+      #检查consumer不活跃的门槛（单位秒）
       pendingListIdleThreshold: 10
       time-unit: seconds
 ```
